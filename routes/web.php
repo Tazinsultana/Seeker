@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -32,5 +34,11 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('/admin/home', [HomeController::class, 'AdminHome'])->name('adminhome');
+    Route::get('/admin/dashboard', [AdminController::class, 'AdminPannel'])->name('admindashboard');
+
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('product', 'Index')->name('product');
+        Route::post('add-product', 'AddProduct')->name('add.product');
+    });
 
 });
